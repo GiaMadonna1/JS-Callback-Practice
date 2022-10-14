@@ -1,51 +1,32 @@
 const inventory = newInventory()
 move(inventory).to(0, 0)
-
 const character = newImage('assets/green-character/static.gif')
-let direction = null;
-let x = 100;
-let y = 250;
 
-function moveCharacter(){
-if (direction === 'west'){
-    x = x - 1
-}
-if (direction === 'north'){
-    y = y + 1
-}
-if (direction === 'east'){
-    x = x + 1
-}
-if (direction === 'south'){
-    y = y - 1
-}
-character.style.left = x + 'px'
-character.style.bottom = y + 'px'
-}
-
-document.addEventListener('keydown', function(e){
-    if (e.repeat) return;
-
-    if(e.key === 'ArrowLeft') {
-        direction = 'west'
+function handleDirectionChange(direction){
+    if(direction === null){
+        character.src = 'assets/green-character/static.gif'
     }
-    if (e.key === 'ArrowUp'){
-        direction = 'north'
+    if(direction === 'west'){
+        character.src = 'assets/green-character/west.gif'
     }
-    if (e.key === 'ArrowRight'){
-        direction = 'east'
+    if(direction === 'north'){
+        character.src = 'assets/green-character/north.gif'
     }
-    if (e.key === 'ArrowDown'){
-        direction = 'south'
+    if(direction === 'east'){
+        character.src = 'assets/green-character/east.gif'
     }
-})
+    if(direction === 'south'){
+        character.src = 'assets/green-character/south.gif'
+    }
+}
+// After one of the last steps where it tells you to delete a portion of this
+// file I got the error that my direction was not defined. My first step was 
+// to repaste the e.key portion here, but that did not work and broke my code
+// further. So my next step was to add direction as a perameter. The error
+// went away but my character is still no longer able to walk any other
+// direction besides west.
 
-document.addEventListener('keyup', function(e){
-    direction = null
-})
-
-move(character).to(100, 250)
-setInterval( moveCharacter, 1)
+move(character).withArrowKeys(100, 250, handleDirectionChange)
 
 
 move(newImage('assets/tree.png')).to(200, 450)
